@@ -13,6 +13,38 @@ import java.util.List;
 import java.util.concurrent.*;
 
 public class TotalMemo {
+
+    @Test
+    void test() throws InterruptedException {
+        List<ChromeDriver> brzs = new ArrayList<>();
+
+        for (int i = 0; i < 3; i++) {
+            brzs.add(new ChromeDriver());
+        }
+
+        for (int i = 0; i < 15; i++) {
+            int brzNum = i % 3;
+            ChromeDriver driver = brzs.get(brzNum);
+            int rNum = (int) (Math.random() * 2) + 1;
+            if (rNum == 1) {
+                // naver
+                driver.get("https://www.naver.com");
+                driver.findElement(By.xpath("//*[@id=\"query\"]")).sendKeys("query");
+                driver.findElement(By.xpath("//button[@type=\"submit\"]")).click();
+            }
+            if (rNum == 2) {
+                // google
+                driver.get("https://www.google.com");
+                WebElement element = driver.findElement(By.cssSelector("[name='q'"));
+                element.sendKeys("query");
+                element.submit();
+            }
+            Thread.sleep(1000);
+        }
+
+    }
+
+
     @Test
     @DisplayName("multi thread")
     void thread() throws InterruptedException, ExecutionException {
